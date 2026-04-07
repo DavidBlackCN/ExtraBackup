@@ -15,17 +15,21 @@ def main():
 
 @new_thread
 def start_schedule_thread(server: PluginServerInterface):
-    schedule_backup = Scheduler("backup")
-    schedule_backup.set_schedule_thread(CommandManager(server).cmd_upload,
-                                        source=server.get_plugin_command_source(),
-                                        ctx={"id": "latest"})
-    schedule_backup.start_schedule_thread()
-    time.sleep(3)
-    schedule_prune = Scheduler("prune")
-    schedule_prune.set_schedule_thread(CommandManager(server).cmd_prune,
-                                       source=server.get_plugin_command_source(),
-                                       ctx={})
-    schedule_prune.start_schedule_thread()
+    commands = CommandManager(server)
+    scheduler = Scheduler()
+    scheduler.register_task(
+        "backup",
+        commands.cmd_upload,
+        source=server.get_plugin_command_source(),
+        ctx={"id": "latest", "sync": "true"},
+    )
+    scheduler.register_task(
+        "prune",
+        commands.cmd_prune,
+        source=server.get_plugin_command_source(),
+        ctx={"sync": "true"},
+    )
+    scheduler.start()
 
 def on_load(server: PluginServerInterface , old):
     server.logger.info(tr("Plugin_loading"))
@@ -44,5 +48,6 @@ def on_load(server: PluginServerInterface , old):
 def on_unload(server:PluginServerInterface):
     for key in States().schedule_task_state:
         States().schedule_task_state[key]="false"
+    Scheduler().stop()
     time.sleep(1)
     server.logger.info(tr("Plugin_unloaded"))

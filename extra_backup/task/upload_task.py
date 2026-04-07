@@ -12,6 +12,7 @@ from extra_backup.file_manager.local_processor import LocalProcessor as LP
 from extra_backup.file_manager.ftp_processor import FTPProcessor as FTP
 from extra_backup.lang.lang_processor import tr
 from extra_backup.task.export_task import ExportTask
+from extra_backup.task.schedule_task import Scheduler
 
 class Uploader:
     @staticmethod
@@ -80,8 +81,7 @@ class Uploader:
                 pass
 
     @staticmethod
-    @new_thread
-    def upload(backup_id: int, source: CommandSource):
+    def _upload_impl(backup_id: int, source: CommandSource, reset_timer: bool):
         if States().Uploading:
             source.reply(RText(tr("another_uploader_is_running"), RColor.yellow))
             return
@@ -137,3 +137,14 @@ class Uploader:
                                 RColor.blue))
         finally:
             States().Uploading = False
+            if reset_timer:
+                Scheduler().reset_task("backup")
+
+    @staticmethod
+    @new_thread
+    def upload(backup_id: int, source: CommandSource, reset_timer: bool = True):
+        Uploader._upload_impl(backup_id=backup_id, source=source, reset_timer=reset_timer)
+
+    @staticmethod
+    def upload_sync(backup_id: int, source: CommandSource, reset_timer: bool = False):
+        Uploader._upload_impl(backup_id=backup_id, source=source, reset_timer=reset_timer)

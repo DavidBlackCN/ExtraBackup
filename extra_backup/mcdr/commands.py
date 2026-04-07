@@ -100,6 +100,7 @@ class CommandManager:
 
     def cmd_upload(self, source: CommandSource, ctx: CommandContext):
         raw_id = self._get_str_from_ctx(ctx, "id")
+        sync_flag = self._get_str_from_ctx(ctx, "sync").lower() == "true"
         if raw_id == "":
             raw_id = "latest"
         try:
@@ -109,7 +110,10 @@ class CommandManager:
             return
 
         source.reply(tr("upload_start", id=backup_id))
-        Uploader.upload(backup_id=backup_id, source=source)
+        if sync_flag:
+            Uploader.upload_sync(backup_id=backup_id, source=source, reset_timer=False)
+        else:
+            Uploader.upload(backup_id=backup_id, source=source, reset_timer=True)
 
     def cmd_download(self, source: CommandSource, ctx: CommandContext):
         filename = ctx.get("filename")
@@ -118,7 +122,11 @@ class CommandManager:
 
 
     def cmd_prune(self, source: CommandSource, ctx: CommandContext):
-        Pruner.prune(source)
+        sync_flag = self._get_str_from_ctx(ctx, "sync").lower() == "true"
+        if sync_flag:
+            Pruner.prune_sync(source)
+        else:
+            Pruner.prune(source)
 
     def cmd_list(self, source: CommandSource, ctx: CommandContext):
         location = self._get_str_from_ctx(ctx, "location")

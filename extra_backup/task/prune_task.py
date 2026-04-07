@@ -19,8 +19,7 @@ class Pruner:
         return os.listdir(path)
 
     @staticmethod
-    @new_thread
-    def prune(source: CommandSource):
+    def _prune_impl(source: CommandSource):
         source.reply(tr("prune_start", id=""))
         max_lifetime = Scheduler.time_loader(Config().get("schedule_prune")["max_lifetime"])
 
@@ -52,6 +51,15 @@ class Pruner:
                     case _:
                         ...
         source.reply(RText(tr("prune_complete"), RColor.green))
+
+    @staticmethod
+    @new_thread
+    def prune(source: CommandSource):
+        Pruner._prune_impl(source)
+
+    @staticmethod
+    def prune_sync(source: CommandSource):
+        Pruner._prune_impl(source)
 
     @staticmethod
     @new_thread
