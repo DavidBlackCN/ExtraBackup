@@ -71,4 +71,5 @@
   ,"invalid_backup_id": "无效备份 id：{id}"
   ,"invalid_delete_index": "无效删除编号：{id}"
   ,"list_header": "备份文件列表（编号 | 路径 | 文件名）"
+  ,"prune_skip_missing_path": "清理跳过：{label} 路径不存在 -> {path}"
 }

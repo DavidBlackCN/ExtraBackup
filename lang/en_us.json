@@ -71,4 +71,5 @@
   ,"invalid_backup_id": "Invalid backup id: {id}"
   ,"invalid_delete_index": "Invalid delete index: {id}"
   ,"list_header": "Backup files (index | path | filename)"
+  ,"prune_skip_missing_path": "Prune skipped: {label} path not found -> {path}"
 }

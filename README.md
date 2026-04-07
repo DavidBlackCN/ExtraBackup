@@ -87,8 +87,7 @@ Supported:
     "interval": "1d",           // Pruning interval
     "max_lifetime": "3d",       // Max file lifetime before considered outdated
 
-    "prune_downloads": "true",  // Prune the exb_downloads folder
-    "prune_exports": "true"     // Prune the PrimeBackup export folder
+    "prune_downloads": "true"   // Prune the exb_downloads folder
   }
 }
 ```

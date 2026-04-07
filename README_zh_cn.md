@@ -97,8 +97,7 @@
         "interval": "1d",         // 定时清理时间间隔
         "max_lifetime": "3d",     // 文件最大生命时间
 
-        "prune_downloads": "true", // 是否清理 exb_downloads 文件夹
-        "prune_exports": "true"   // 是否清理 pb 导出文件夹
+        "prune_downloads": "true" // 是否清理 exb_downloads 文件夹
     }
 }
 ```

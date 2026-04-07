@@ -19,8 +19,7 @@ class DefaultConfig:
                             "enable":"false",
                             "interval":"1d",
                             "max_lifetime":"3d",
-                            "prune_downloads":"true",
-                            "prune_exports":"true"
+                            "prune_downloads":"true"
                         }
                       }
     config_folder = os.path.join(os.path.join(os.getcwd(), "config"), "extra_backup")
@@ -48,6 +47,12 @@ class Config:
         try:
             with open(DefaultConfig.config_file, "r") as config_file:
                 self.config = json.load(config_file)
+                # 清理历史遗留字段，避免和当前实现语义不一致
+                schedule_prune = self.config.get("schedule_prune")
+                if isinstance(schedule_prune, dict) and "prune_exports" in schedule_prune:
+                    schedule_prune.pop("prune_exports", None)
+                    with open(DefaultConfig.config_file, "w") as write_file:
+                        json.dump(self.config, write_file, indent=4, ensure_ascii=False)
         except FileNotFoundError as e:
             self.config = DefaultConfig.main_config
             if os.path.exists(DefaultConfig.config_folder):
