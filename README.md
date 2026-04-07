@@ -21,15 +21,16 @@ The current version supports **local-disk backup only**. FTP and other storage m
 
 ## 🧭 Commands
 
-### `!!exb upload <id> [tag]`
-Upload a specific backup from your backup folder (usually `pb_files/export`).  
-- `id` supports PrimeBackup special IDs like `latest`, `~3`, etc.  
-- `tag` is an optional custom label for the backup.
+### `!!exb`
+Show plugin status and command help.
 
 ---
 
-### `!!exb uploadall`
-Upload **all backups** found in the backup folder, automatically skipping duplicates.
+### `!!exb upload [id]`
+Upload a specific backup to enabled paths in backup_path.json (without persistent files in pb_files/export).  
+- `id` supports PrimeBackup special IDs like `latest`, `~3`, etc.  
+- If `id` is omitted, it defaults to `latest`.
+- Uploaded file name format: `backup-YYYY_MM_DD_N.tar` (`N` is the upload sequence of the day).
 
 ---
 
@@ -41,21 +42,20 @@ Download a file from a specified backup path back to the server.
 ---
 
 ### `!!exb list [location]`
-List backups stored in a given backup path.  
-- If `location` is omitted → lists backups stored locally.
+List files in enabled paths configured by `backup_path.json`, with indexes.  
+- If `location` is omitted → lists files across all enabled backup paths.
+- If `location` is provided → lists files only in that path.
 
 ---
 
-### `!!exb prune [id]`
+### `!!exb prune`
 Remove outdated backup files.  
-- Provide an `id` → prune that backup directly (ignores expiration)  
-- Leave it empty → prune **all** outdated backups  
 - The expiration window is configured in the config file.
 
 ---
 
-### `!!exb delete <file_name> <location>`
-Delete a specific backup file from a specific backup path.
+### `!!exb delete <id>`
+Delete a backup file by the index shown in `!!exb list`.
 
 ---
 

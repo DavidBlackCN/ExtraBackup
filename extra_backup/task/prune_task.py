@@ -13,8 +13,8 @@ from extra_backup.file_manager.local_processor import LocalProcessor as LP
 class Pruner:
     @staticmethod
     @new_thread
-    def prune(id: str | None, source: CommandSource):
-        source.reply(tr("prune_start", id = "" if id is None else id))
+    def prune(source: CommandSource):
+        source.reply(tr("prune_start", id=""))
         if Config().get("schedule_prune")["prune_downloads"] == "true":
             for file in os.listdir(DefaultConfig().download_path):
                 if time.time() - os.path.getmtime(os.path.join(DefaultConfig().download_path, file)) > Scheduler.time_loader(Config().get("schedule_prune")["max_lifetime"]):
@@ -33,18 +33,12 @@ class Pruner:
             if BackupConfig().backup_list[backup_path]["enable"] == "true":
                 match BackupConfig().backup_list[backup_path]["mode"]:
                     case "local":
-                        if id is None:
-                            for file in os.listdir(BackupConfig().backup_list[backup_path]["address"]):
-                                if time.time() - os.path.getmtime(os.path.join(BackupConfig().backup_list[backup_path]["address"],file)) > Scheduler.time_loader(Config().get("schedule_prune")["max_lifetime"]):
-                                    LP.delete(file,
-                                              BackupConfig().backup_list[backup_path],
-                                              backup_path,
-                                              source)
-                        else:
-                            LP.delete(f"backup_{id}.tar",
-                                      BackupConfig().backup_list[backup_path],
-                                      backup_path,
-                                      source)
+                        for file in os.listdir(BackupConfig().backup_list[backup_path]["address"]):
+                            if time.time() - os.path.getmtime(os.path.join(BackupConfig().backup_list[backup_path]["address"],file)) > Scheduler.time_loader(Config().get("schedule_prune")["max_lifetime"]):
+                                LP.delete(file,
+                                          BackupConfig().backup_list[backup_path],
+                                          backup_path,
+                                          source)
                     case "ftp":
                         ...
                     case "smb":
@@ -57,13 +51,13 @@ class Pruner:
 
     @staticmethod
     @new_thread
-    def delete(id, backup_path, source: CommandSource):
-        source.reply(tr("delete_start", id = id, backup_path = backup_path))
+    def delete(filename: str, backup_path: str, source: CommandSource):
+        source.reply(tr("delete_start", id=filename, backup_path=backup_path))
         if backup_path in BackupConfig().backup_list.keys():
             if BackupConfig().backup_list[backup_path]["enable"] == "true":
                 match BackupConfig().backup_list[backup_path]["mode"]:
                     case "local":
-                        LP.delete(f"backup_{id}.tar",
+                        LP.delete(filename,
                                   BackupConfig().backup_list[backup_path],
                                   backup_path,
                                   source)

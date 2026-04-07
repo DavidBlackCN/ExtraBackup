@@ -8,7 +8,6 @@ from extra_backup.utils.Singleton import singleton
 class CommandPermissions:
     DEFAULT = {
         "upload": 2,
-        "uploadall": 2,
         "download": 2,
         "delete": 2,
         "list": 1,

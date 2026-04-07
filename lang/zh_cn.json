@@ -54,4 +54,21 @@
   "folder_switch_or_generate_failed": "目录切换或创建失败：{error}",
 
   "list_failed": "从{address}获取文件列表失败, 原因是：{error}"
+  ,"status_enabled": "启用"
+  ,"status_disabled": "禁用"
+  ,"command_help_title": "ExtraBackup 状态与命令帮助"
+  ,"command_status": "插件状态：{plugin}"
+  ,"command_status_schedule_backup": "定时上传：{enabled}，间隔：{interval}"
+  ,"command_status_schedule_prune": "定时清理：{enabled}，间隔：{interval}"
+  ,"command_status_paths": "可用备份路径：{enabled}/{total}"
+  ,"command_help_upload": "!!exb upload [id] - 上传指定备份，不写 id 默认 latest"
+  ,"command_help_download": "!!exb download <filename> [from] - 从指定路径下载备份"
+  ,"command_help_list": "!!exb list [location] - 列出备份路径文件并显示编号"
+  ,"command_help_prune": "!!exb prune - 清理所有过时文件"
+  ,"command_help_delete": "!!exb delete <id> - 按列表编号删除文件"
+  ,"command_help_lang": "!!exb lang <language> - 切换插件语言"
+  ,"command_help_abort": "!!exb abort - 终止当前任务（待实现）"
+  ,"invalid_backup_id": "无效备份 id：{id}"
+  ,"invalid_delete_index": "无效删除编号：{id}"
+  ,"list_header": "备份文件列表（编号 | 路径 | 文件名）"
 }

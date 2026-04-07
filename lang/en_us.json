@@ -54,4 +54,21 @@
   "folder_switch_or_generate_failed": "Failed to switch or create directory: {error}",
 
   "list_failed": "Failed to fetch file list from {address}, reason: {error}"
+  ,"status_enabled": "enabled"
+  ,"status_disabled": "disabled"
+  ,"command_help_title": "ExtraBackup status and command help"
+  ,"command_status": "Plugin status: {plugin}"
+  ,"command_status_schedule_backup": "Scheduled upload: {enabled}, interval: {interval}"
+  ,"command_status_schedule_prune": "Scheduled prune: {enabled}, interval: {interval}"
+  ,"command_status_paths": "Available backup paths: {enabled}/{total}"
+  ,"command_help_upload": "!!exb upload [id] - Upload specific backup, default is latest"
+  ,"command_help_download": "!!exb download <filename> [from] - Download backup from path"
+  ,"command_help_list": "!!exb list [location] - List backup files with index"
+  ,"command_help_prune": "!!exb prune - Prune all outdated files"
+  ,"command_help_delete": "!!exb delete <id> - Delete by list index"
+  ,"command_help_lang": "!!exb lang <language> - Switch plugin language"
+  ,"command_help_abort": "!!exb abort - Abort running task (TODO)"
+  ,"invalid_backup_id": "Invalid backup id: {id}"
+  ,"invalid_delete_index": "Invalid delete index: {id}"
+  ,"list_header": "Backup files (index | path | filename)"
 }

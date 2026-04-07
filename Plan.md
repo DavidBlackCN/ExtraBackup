@@ -1,0 +1,8 @@
+修改内容：
+1. 使用 `!!exb` 命令显示插件状态和命令帮助
+2. 当使用 `!!exb upload` 命令时（没有指定`id`参数时），自动上传最近一次的备份文件
+3. 当使用 `!!exb upload` 命令或者触发自动定时上传时，不在pb_files/export中留存备份文件，而是直接上传到 `backup_path.json` 中指定的备份路径
+4. 源代码没有留存 `!!exb uploadall` 的命令，不再添加同时修改README中的描述
+5. 当使用 `!!exb list` 命令时，显示 `backup_path.json` 中指定的备份路径中的文件列表
+6. 当使用 `!!exb prune` 命令时，清理所有过时文件，将指定id的逻辑删除
+7. 当使用 `!!exb delete <id>` 命令时，删除指定备份路径中的指定文件（需要为backup_path.json` 中指定的备份路径中的备份文件进行编号）
